@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import GameList from "./components/GameList.jsx";
+import GameDisplay from "./components/GameDisplay.jsx";
 
 function App() {
+  const [currentgame, setcurrentgame] = useState([]);
+
+  const onGoingGame = (newGame) => {
+    setcurrentgame([...currentgame, newGame]);
+  };
+
+  const deletegame = (index) => {
+    let x = [...currentgame];
+    x.splice(index, 1);
+    setcurrentgame(x);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <GameList NewGame={onGoingGame} />
+      <GameDisplay games={currentgame} delete={deletegame} />
     </div>
   );
 }
